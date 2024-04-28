@@ -6,6 +6,7 @@ import fs from 'fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { Project, ProjectConfig } from './services/project.js';
+import { gray } from 'kleur/colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -84,7 +85,7 @@ const assertDirExists = (name, path) => {
 		clog.error(`FATAL: Directory for '${name}' does not exists... (${path})`);
 		process.exit(1);
 	} else {
-		clog.debug(`✓ ${name}: ${path}`);
+		// clog.debug(gray(`✓ ${name}: ${path}`));
 	}
 };
 

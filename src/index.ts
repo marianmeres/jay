@@ -32,7 +32,9 @@ app.use((req, res, next) => {
 			const token = Api.parseBearerToken(req.headers.authorization).slice(0, 6);
 			const auth = token ? yellow(` (${token}...)`) : '';
 			const dur = ` (${Date.now() - start} ms)`;
-			clog.debug(`${code} ${req.method.toUpperCase()} ${req.originalUrl}${dur}${auth}`);
+			clog.debug(
+				gray(`${code} ${req.method.toUpperCase()} ${req.originalUrl}${dur}${auth}`)
+			);
 		});
 	}
 	next();

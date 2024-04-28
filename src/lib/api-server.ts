@@ -1,7 +1,7 @@
 import { createClog } from '@marianmeres/clog';
 import { Renderer } from '@marianmeres/test-runner';
 import { Application, Request, Response, Router } from 'express';
-import { bold, gray } from 'kleur/colors';
+import { bold, gray, magenta } from 'kleur/colors';
 import { Config } from '../config.js';
 import { routeAuth } from '../routes/route-auth.js';
 import { routeCreate } from '../routes/route-create.js';
@@ -74,7 +74,7 @@ export const createApiServer = (app: Application) => {
 	// CAUTION: dangerous (security wise) special case route for testing...
 	// basically modifies the in-memory store, without serializing to filesystem
 	if (!Config.IS_PRODUCTION) {
-		clog.warn(`Hackable store...`);
+		clog.warn(magenta(`Running in dev mode (with hackable store enabled)!`));
 		api.post(ROUTE._STORE, routeDangerousStoreMerge);
 	}
 
