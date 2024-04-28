@@ -5,6 +5,7 @@ import fs from 'fs';
 import { get, post } from 'httpie';
 import _ from 'lodash';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { totalist } from 'totalist/sync/index.js';
 import { Config } from '../config.js';
 import { API_CMS_PREFIX, ROUTE } from '../lib/api-server.js';
@@ -15,7 +16,7 @@ import { Project } from '../services/project.js';
 import { ModelLike } from '../utils/repository.js';
 import { modelUid } from '../utils/uuid.js';
 
-const clog = createClog('_test-util');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 export const TEST_USER_ID = '0000-1111-2222-3333-4444';
 export const TEST_USER_EMAIL = 'foo@example.com';

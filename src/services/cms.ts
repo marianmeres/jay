@@ -4,6 +4,7 @@ import yaml from 'js-yaml';
 import { bold } from 'kleur/colors';
 import _ from 'lodash';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { totalist } from 'totalist';
 import util from 'util';
 import { Config } from '../config.js';
@@ -12,7 +13,7 @@ import { Crud } from './crud.js';
 import { Project, ProjectConfig } from './project.js';
 import { Schema } from './schema.js';
 
-const clog = createClog('cms');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);

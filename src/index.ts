@@ -7,13 +7,15 @@ import compression from 'compression';
 import express from 'express';
 import { bold, gray, green, red, yellow } from 'kleur/colors';
 import isEmpty from 'lodash/isEmpty.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import tinydate from 'tinydate';
 import { Config } from './config.js';
 import { createApiServer } from './lib/api-server.js';
 import { Api } from './services/api.js';
 import { Project } from './services/project.js';
 
-const clog = createClog('index');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 //
 const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS } = Config;

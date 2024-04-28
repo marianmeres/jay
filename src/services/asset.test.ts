@@ -11,7 +11,7 @@ import { Asset } from './asset.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const clog = createClog('asset.test');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 const srcCatJpg = path.join(Config.SRC_DATA_DIR, 'cat.jpg');
 const srcCat2Jpg = path.join(Config.SRC_DATA_DIR, 'cat-vertical.jpg');

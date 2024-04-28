@@ -10,10 +10,10 @@ import { gray } from 'kleur/colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const clog = createClog('config');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 let {
-	PORT = 3100,
+	PORT = 6100,
 	HOST = '0.0.0.0',
 	NODE_ENV = 'production',
 	//

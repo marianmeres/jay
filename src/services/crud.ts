@@ -2,6 +2,8 @@ import { createClog } from '@marianmeres/clog';
 import { parseBoolean } from '@marianmeres/parse-boolean';
 import bcrypt from 'bcrypt';
 import _ from 'lodash';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import slugify from 'slugify';
 import { NotFound } from '../utils/errors.js';
 import { ModelLike, Repository } from '../utils/repository.js';
@@ -11,7 +13,7 @@ import { Project } from './project.js';
 import { Schema } from './schema.js';
 import { TokenData } from './token.js';
 
-const clog = createClog('crud');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 //
 export class Crud {

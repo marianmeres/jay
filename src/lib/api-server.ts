@@ -2,6 +2,8 @@ import { createClog } from '@marianmeres/clog';
 import { Renderer } from '@marianmeres/test-runner';
 import { Application, Request, Response, Router } from 'express';
 import { bold, gray, magenta } from 'kleur/colors';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config } from '../config.js';
 import { routeAuth } from '../routes/route-auth.js';
 import { routeCreate } from '../routes/route-create.js';
@@ -22,7 +24,7 @@ import { assertValidTokenProjectId } from './middleware/assert-valid-token-proje
 import { factorySharedProjectInstance } from './middleware/factory-shared-project-instance.js';
 import { postSaveNotifyHook } from './middleware/post-save-notify-hook.js';
 
-const clog = createClog('api-server');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 const PROD = /production/.test(process.env.NODE_ENV);
 

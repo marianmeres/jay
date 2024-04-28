@@ -2,6 +2,7 @@ import { createClog } from '@marianmeres/clog';
 import crypto from 'crypto';
 import fs from 'fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import sharp from 'sharp';
 import { totalist } from 'totalist';
 import util from 'util';
@@ -14,7 +15,7 @@ const fsRename = util.promisify(fs.rename);
 const fsCopy = util.promisify(fs.copyFile);
 const fsUnlink = util.promisify(fs.unlink);
 
-const clog = createClog('asset');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 interface AssetMeta {
 	_name: string;

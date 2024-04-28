@@ -1,6 +1,8 @@
 import { createClog } from '@marianmeres/clog';
 import { NextFunction, Request, Response } from 'express';
 import formidable from 'formidable';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config } from '../config.js';
 import { ApiServerLocals } from '../lib/api-server.js';
 import { STATUS } from '../lib/constants.js';
@@ -8,7 +10,7 @@ import { Api } from '../services/api.js';
 import { Asset, AssetModel } from '../services/asset.js';
 import { Crud } from '../services/crud.js';
 
-const clog = createClog('route-upload');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 export const routeUpload = async (req: Request, res: Response, next: NextFunction) => {
 	const { project } = res.locals as ApiServerLocals;

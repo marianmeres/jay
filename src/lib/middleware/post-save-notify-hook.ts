@@ -1,7 +1,9 @@
 import { createClog } from '@marianmeres/clog';
 import { get } from 'httpie';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const clog = createClog('post-save-notify-hook');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 /**
  * Pod "write" sa mysli akoze "create", "update" alebo "delete"

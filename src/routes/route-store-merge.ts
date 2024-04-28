@@ -5,8 +5,10 @@ import _ from 'lodash';
 import { Config } from '../config.js';
 import { ApiServerLocals } from '../lib/api-server.js';
 import { Forbidden } from '../utils/errors.js';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const clog = createClog(magenta('route-store-merge'));
+const clog = createClog(magenta(path.basename(fileURLToPath(import.meta.url))));
 
 export const routeDangerousStoreMerge = async (
 	req: Request,

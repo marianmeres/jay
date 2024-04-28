@@ -1,9 +1,11 @@
+import { createClog } from '@marianmeres/clog';
 import _ from 'lodash';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { NotFound } from './errors.js';
 import { modelUid } from './uuid.js';
-import { createClog } from '@marianmeres/clog';
 
-const clog = createClog('repository');
+const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 const _assertWhere = (where) => {
 	if (!where) throw new TypeError('Missing where parameter');
