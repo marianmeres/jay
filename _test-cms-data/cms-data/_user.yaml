@@ -1,0 +1,47 @@
+
+_access:
+    public:
+        create: false
+        read_one: true
+        read_all: false
+        update: false
+        delete: false
+
+_schema:
+#    title: User
+    required:
+        - email
+        - role
+    properties:
+        email:
+            type: string
+            format: email
+            _html:
+                type: email
+                required: true
+            _transform:
+                - trim
+                - lowercase
+            _unique: true
+            _cms_collection_view_visible: true
+
+        role:
+            type: string
+            enum:
+                - editor
+                - admin
+            _cms_collection_view_visible: true
+
+        __password:
+            type: string
+            _html:
+                type: password
+                required: true
+            _transform:
+                - trim
+                - bcrypt
+            _order: 999
+
+    _order: 999
+
+
