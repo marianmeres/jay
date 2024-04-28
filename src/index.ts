@@ -2,7 +2,6 @@ console.clear();
 
 //
 import { createClog } from '@marianmeres/clog';
-import { parseBoolean } from '@marianmeres/parse-boolean';
 import bodyParser from 'body-parser';
 import compression from 'compression';
 import express from 'express';
@@ -13,23 +12,11 @@ import { Config } from './config.js';
 import { createApiServer } from './lib/api-server.js';
 import { Api } from './services/api.js';
 import { Project } from './services/project.js';
-import { sleep } from './utils/sleep.js';
 
 const clog = createClog('index');
 
 //
-const {
-	HOST,
-	PORT,
-	CONSOLE_LOG_REQUESTS,
-	ADMIN_ENABLED,
-	ADMIN_MOUNT,
-	ADMIN_DIST_DIR,
-	LEGACY_ADMIN_ENABLED,
-	LEGACY_ADMIN_MOUNT,
-	LEGACY_ADMIN_DIST_DIR,
-	CMS_PROJECTS,
-} = Config;
+const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS } = Config;
 
 //
 const app = express();
@@ -66,22 +53,6 @@ if (!isEmpty(CMS_PROJECTS)) {
 	});
 } else {
 	clog.error('Empty CMS_PROJECTS config...');
-}
-
-// always mount admin SPA client unless not explicitely disabled
-if (parseBoolean(ADMIN_ENABLED)) {
-	clog.debug(`Mounted ${ADMIN_MOUNT}`);
-	app.use(ADMIN_MOUNT, express.static(ADMIN_DIST_DIR, { dotfiles: 'deny' }));
-}
-
-// deprecated legacy client
-if (parseBoolean(LEGACY_ADMIN_ENABLED)) {
-	clog.debug(`Mounted ${LEGACY_ADMIN_MOUNT}`);
-	clog(LEGACY_ADMIN_MOUNT, LEGACY_ADMIN_DIST_DIR);
-	app.use(
-		LEGACY_ADMIN_MOUNT,
-		express.static(LEGACY_ADMIN_DIST_DIR, { dotfiles: 'deny' })
-	);
 }
 
 app.listen(PORT as any, HOST, () => {

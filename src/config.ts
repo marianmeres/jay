@@ -20,15 +20,6 @@ let {
 	CMS_TEMP_DIR = 'tmp',
 
 	//
-	ADMIN_ENABLED = 1,
-	ADMIN_MOUNT = '/admin',
-	ADMIN_DIST_DIR = '../client/dist',
-
-	//
-	LEGACY_ADMIN_ENABLED = 1,
-	LEGACY_ADMIN_MOUNT = '/legacy-admin',
-	LEGACY_ADMIN_DIST_DIR = '../_legacy-admin-client/public',
-	//
 	CONSOLE_LOG_REQUESTS = 1,
 	//
 } = process.env;
@@ -39,8 +30,6 @@ const PROJECT_ROOT_DIR = path.resolve(__dirname, '../');
 {
 	SRC_DATA_DIR          = path.join(PROJECT_ROOT_DIR, SRC_DATA_DIR);
 	CMS_TEMP_DIR          = path.join(PROJECT_ROOT_DIR, CMS_TEMP_DIR);
-	ADMIN_DIST_DIR        = path.join(PROJECT_ROOT_DIR, ADMIN_DIST_DIR);
-	LEGACY_ADMIN_DIST_DIR = path.join(PROJECT_ROOT_DIR, LEGACY_ADMIN_DIST_DIR);
 }
 
 // read and normalize cms_projects.config.json
@@ -49,7 +38,7 @@ let CMS_PROJECTS = JSON.parse(
 )
 	.map(({ id, name, dataDir, publicDir, uploadDir }): ProjectConfig => {
 		id = Project.normalizeName(id);
-		const reserved = ['api', ADMIN_MOUNT.toLowerCase().replace('/', '')];
+		const reserved = ['api'];
 		if (reserved.includes(id)) {
 			clog.error(`Reserved project id violation '${id}', skipping...`);
 			return null;
@@ -80,14 +69,6 @@ export class Config {
 
 	static readonly CMS_PROJECTS: ProjectConfig[] = CMS_PROJECTS as any;
 	static readonly CMS_TEMP_DIR = CMS_TEMP_DIR;
-
-	static readonly ADMIN_ENABLED = ADMIN_ENABLED;
-	static readonly ADMIN_MOUNT = ADMIN_MOUNT;
-	static readonly ADMIN_DIST_DIR = ADMIN_DIST_DIR;
-
-	static readonly LEGACY_ADMIN_ENABLED = LEGACY_ADMIN_ENABLED;
-	static readonly LEGACY_ADMIN_MOUNT = LEGACY_ADMIN_MOUNT;
-	static readonly LEGACY_ADMIN_DIST_DIR = LEGACY_ADMIN_DIST_DIR;
 
 	static readonly CONSOLE_LOG_REQUESTS = CONSOLE_LOG_REQUESTS;
 
