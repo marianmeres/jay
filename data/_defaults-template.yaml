@@ -1,0 +1,70 @@
+
+_access:
+    public:
+        create: false
+        read_one: true
+        read_all: false
+        update: false
+        delete: false
+
+    authenticated:
+        create: true
+        read_one: true
+        read_all: true
+        update: true
+        delete: true
+
+_schema:
+    $schema: "http://json-schema.org/draft-07/schema#"
+    $id: will-be-added
+    type: object
+    required:
+        - id
+    properties:
+        id:
+            type: string
+            _html:
+                type: text
+                readonly: false
+                required: false
+            _default:
+                fn: modelid
+            _unique: true
+            _order: 0
+
+        _owner:
+            type: string
+            _order: 9970
+
+        _created_at:
+            type: string
+            _transform:
+                - date-time
+            _default:
+                fn: now
+            _order: 9980
+
+        _updated_at:
+            type: string
+            _transform:
+                - date-time
+            _default:
+                fn: now
+            _order: 9990
+
+    _order: 999
+
+_schema_property_template:
+    type: string
+    _html:
+        readonly: false
+        required: false
+    _default: null
+    _transform:
+        - trim
+    _unique: false
+    _order: 99
+
+_meta: {}
+
+

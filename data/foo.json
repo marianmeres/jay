@@ -1,0 +1,24 @@
+{
+	"name": "bar",
+	"switch": false,
+	"id": "foo",
+	"_created_at": "2020-12-28T14:27:49.338Z",
+	"_updated_at": "2024-04-26T07:19:01.403Z",
+	"_special": "6f8a475cac3",
+	"__hidden": "b5ec10e3-4a04-437a-9986-51498b25b08c",
+	"constant": "kokos",
+	"data": [
+		[
+			"baz",
+			{
+				"textarea": "bat"
+			}
+		],
+		[
+			"foo",
+			"bar"
+		]
+	],
+	"reflike_any_of": [],
+	"reflike_one_of": []
+}

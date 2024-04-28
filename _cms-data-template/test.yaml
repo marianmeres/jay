@@ -1,0 +1,93 @@
+_access:
+    public:
+        create: true
+        read_one: true
+        read_all: true
+        update: true
+        delete: true
+    authenticated:
+        create: true
+        read_one: true
+        read_all: true
+        update: true
+        delete: true
+
+_schema:
+    description: This is just demo test entity
+    required:
+        - name
+    properties:
+
+        name:
+            type: string
+            _html:
+                label: Nomen
+            _transform:
+                - trim
+                - lowercase
+            _unique: true
+            _cms_collection_view_visible: true
+            _order: 1
+            _natural_id: true
+
+        switch:
+            type: boolean
+            _html:
+                type: checkbox
+                label: super prepínač
+                description: Tak toto je popis k switchu
+            _transform:
+                - boolean
+
+        constant:
+            type: string
+            _html:
+                readonly: true
+                required: true
+
+        reflike:
+            type: array
+            items:
+                type: string
+            _html:
+                label: Priradené médiá
+                description: Tak toto je popis k ref
+                type: reference_any_of
+                reference_whitelist:
+                    - _asset
+                    - page
+                asset_folder_whitelist:
+                    - ^cat$
+                    - ^foo
+                asset_mimetype_whitelist:
+                    - image
+            _transform:
+                - array-from-csv
+
+        data:
+            type:
+                - array
+                - "null"
+            _html:
+                type: omap
+                description: Tak toto je popis k omap
+
+        _special:
+            type: string
+            description: visible but readonly from client perspective
+            _default:
+                fn: uid
+
+        __hidden:
+            type: string
+            description: complete hidden in response
+            _default:
+                fn: uuid
+
+        __password:
+            type: string
+            _transform:
+                - trim
+                - bcrypt
+
+    _order: 9999
