@@ -21,9 +21,9 @@ const suite = new TestRunner(path.basename(__filename));
 
 suite.test('upload file works', async () => {
 	const project = await Project.factory('test');
-	const { id, title } = await TestUtil.uploadFile(srcCatJpg, { 
+	const { id, title } = await TestUtil.uploadFile(srcCatJpg, {
 		title: 'Tom the cat',
-		foo: 'bar'
+		foo: 'bar',
 	});
 
 	const modelFile = path.join(

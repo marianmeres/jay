@@ -37,7 +37,7 @@ export const routeUpload = async (req: Request, res: Response, next: NextFunctio
 			}
 
 			const assets = [];
-			
+
 			// prettier-ignore
 			for (let [k, v] of Object.entries(fields)) {
 				// I'm not sure if this is a bug or a feature, but I'm getting the
