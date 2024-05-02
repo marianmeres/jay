@@ -37,7 +37,7 @@ const PROJECT_ROOT_DIR = path.resolve(__dirname, '../');
 let CMS_PROJECTS = JSON.parse(
 	fs.readFileSync(path.join(PROJECT_ROOT_DIR, 'cms_projects.config.json'), 'utf8')
 )
-	.map(({ id, name, dataDir, publicDir, uploadDir }): ProjectConfig => {
+	.map(({ id, name, dataDir, publicDir, uploadDir, hidden }): ProjectConfig => {
 		id = Project.normalizeName(id);
 		const reserved = ['api'];
 		if (reserved.includes(id)) {
@@ -53,7 +53,7 @@ let CMS_PROJECTS = JSON.parse(
 		name = publicConfig.name || name || id;
 		dataDir = path.join(PROJECT_ROOT_DIR, dataDir);
 
-		return { id, name, dataDir, publicDir, uploadDir };
+		return { id, name, dataDir, publicDir, uploadDir, hidden };
 	})
 	.filter(Boolean);
 

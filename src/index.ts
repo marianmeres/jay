@@ -14,6 +14,7 @@ import { Config } from './config.js';
 import { createApiServer } from './lib/api-server.js';
 import { Api } from './services/api.js';
 import { Project } from './services/project.js';
+import { corsFn } from './lib/middleware/cors-fn.js';
 
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
@@ -23,7 +24,7 @@ const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS } = Config;
 //
 const app = express();
 app.disable('x-powered-by');
-app.use(compression(), bodyParser.json());
+app.use(compression(), bodyParser.json(), corsFn);
 
 //  logging middleware
 app.use((req, res, next) => {

@@ -14,6 +14,7 @@ export interface ProjectConfig {
 	dataDir: string;
 	publicDir: string;
 	uploadDir: string;
+	hidden?: boolean;
 }
 
 interface ProjectFactoryOptions {
@@ -88,10 +89,11 @@ export class Project {
 	}
 
 	static async readPublicConfig(projectId) {
-		const { id, name, publicDir } = Project.getEnvConfig(projectId);
+		const { id, name, publicDir, hidden } = Project.getEnvConfig(projectId);
 		return {
 			id,
 			name: name || id,
+			hidden,
 			...(await Project.readPublicConfigFile(publicDir)),
 		};
 	}
