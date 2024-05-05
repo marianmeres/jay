@@ -43,7 +43,7 @@ suite.test('crud repo writer test insert', async () => {
 	const repo = await Crud.factoryRepository<TestModel>(
 		Config.ENTITY_TEST,
 		project,
-		null,
+		undefined,
 		false
 	);
 
@@ -83,7 +83,7 @@ suite.test('crud repo writer test update', async () => {
 	assert(m._updated_at);
 	assert(m._created_at !== m._updated_at);
 
-	const filename = await Cms.getEntityFilename(Config.ENTITY_TEST, m.id, project);
+	const filename = await Cms.getEntityFilename(Config.ENTITY_TEST, m.id as any, project);
 	const loaded = await Cms.readAndParseJsonFile(filename);
 	assert(_.isEqual(m, loaded), 'memory vs written model mismatch');
 });
@@ -94,16 +94,17 @@ suite.test('delete works', async () => {
 	const repo = await Crud.factoryRepository<TestModel>(
 		Config.ENTITY_TEST,
 		project,
-		null,
+		undefined,
 		false
 	);
 
-	let m = await repo.save({ name: 'citim sa tak fajn' });
-	let r = await repo.delete(m.id);
+	let m = await repo.save({ name: 'hey' });
+	const mid = m.id as string;
+	let r = await repo.delete(mid);
 
-	assert(!project.store.models[Config.ENTITY_TEST][m.id], 'Model not removed from store');
+	assert(!project.store.models[Config.ENTITY_TEST][mid], 'Model not removed from store');
 	assert(
-		!fs.existsSync(await Cms.getEntityFilename(Config.ENTITY_TEST, m.id, project)),
+		!fs.existsSync(await Cms.getEntityFilename(Config.ENTITY_TEST, mid, project)),
 		'Model file not deleted'
 	);
 });
@@ -114,12 +115,12 @@ suite.test('password is created correctly', async () => {
 	const repo = await Crud.factoryRepository<TestModel>(
 		Config.ENTITY_TEST,
 		project,
-		null,
+		undefined,
 		false
 	);
 
 	let m = await repo.save({ name: 'hey', __password: 'ho' });
-	assert(await bcrypt.compare('ho', m.__password));
+	assert(await bcrypt.compare('ho', m.__password as any));
 });
 
 suite.test('crud allows setting of underscored props', async () => {
@@ -128,7 +129,7 @@ suite.test('crud allows setting of underscored props', async () => {
 	const repo = await Crud.factoryRepository<TestModel>(
 		Config.ENTITY_TEST,
 		project,
-		null,
+		undefined,
 		false
 	);
 
@@ -142,7 +143,7 @@ suite.test('_unique check works', async () => {
 	const repo = await Crud.factoryRepository<TestModel>(
 		Config.ENTITY_TEST,
 		project,
-		null,
+		undefined,
 		false
 	);
 
