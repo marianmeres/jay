@@ -41,10 +41,10 @@ export const CMS_ASSET_ENTITY_DIR = path.join(dataDir, Config.ENTITY_ASSET);
 export const CMS_TEST_ENTITY_DIR = path.join(dataDir, Config.ENTITY_TEST);
 
 export class TestUtil {
-	static cleanUpTestModels(exceptIds = []) {
+	static cleanUpTestModels(exceptIds: string[] = []) {
 		// never clean up foo - test depends on it
 		// exceptIds.push('foo');
-		const removed = [];
+		const removed: any[] = [];
 
 		totalist(CMS_TEST_ENTITY_DIR, (rel, abs, stats) => {
 			const depth = (rel.replace(/\\/g, '/').match(/\//g) || []).length;

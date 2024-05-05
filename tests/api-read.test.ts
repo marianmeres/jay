@@ -1,12 +1,15 @@
+import { createClog } from '@marianmeres/clog';
 import { TestRunner } from '@marianmeres/test-runner';
 import { strict as assert } from 'assert';
 import { get, post } from 'httpie';
-import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { Config } from '../src/config.js';
 import { ROUTE } from '../src/lib/api-server.js';
 import { STATUS } from '../src/lib/constants.js';
+import { withQueryVars } from '../src/lib/with-query-vars.js';
 import { Api } from '../src/services/api.js';
+import { sleep } from '../src/utils/sleep.js';
 import { modelUid } from '../src/utils/uuid.js';
 import {
 	API,
@@ -21,10 +24,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const correct = { email: TEST_USER_EMAIL, password: TEST_USER_PASSWORD };
 
+const clog = createClog(path.basename(__filename));
+
 const suite = new TestRunner(path.basename(__filename), {
 	beforeEach: async () => {
 		await TestUtil.cleanUpTestModels();
-		await TestUtil.createTestUserJsonFile(null, true);
+		await TestUtil.createTestUserJsonFile(undefined, true);
 		await TestUtil.createFooJsonFile(true);
 	},
 	after: async () => {
@@ -55,9 +60,8 @@ suite.test('get schema', async () => {
 });
 
 suite.test('get collection and model respects access config', async () => {
-	// initially must be empty
 	let r = await get(API_ENT_TEST);
-	assert(Array.isArray(r.data));
+	assert(Array.isArray(r.data.rows));
 
 	// any id requests throws 404
 	await TestUtil.assertStatus(STATUS.NOT_FOUND, get(`${API_ENT_TEST}/${modelUid()}`));
@@ -65,11 +69,12 @@ suite.test('get collection and model respects access config', async () => {
 	// create by hand
 	const id = await TestUtil.createTestModelJsonFile({ name: 'james' }, true);
 
-	const pickById = (r) => r.data.filter((v) => v.id === id)[0];
+	const pickById = (r) => r.data.rows.filter((v) => v.id === id)[0];
 
 	// now not empty
 	r = await get(API_ENT_TEST);
-	assert(r.data.length === 2);
+
+	assert(r.data.rows.length === 2);
 	assert(pickById(r).name === 'james');
 
 	// fetch exact model
@@ -95,8 +100,79 @@ suite.test('get collection and model respects access config', async () => {
 	await TestUtil.assertStatus(STATUS.FORBIDDEN, get(`${API_ENT_TEST}/${id}`));
 });
 
+suite.test('collection limit offset', async () => {
+	let r = await get(API_ENT_TEST);
+
+	for (let id = 1; id < 10; id++) {
+		await sleep(50);
+		// test entity is configured to allow access for public... normaly we would need auth
+		let r = await TestUtil.assertStatus(
+			STATUS.CREATED,
+			post(API_ENT_TEST, { body: { id: `${id}`, name: `${id}` } })
+		);
+	}
+	await TestUtil.refreshCache();
+
+	r = await get(API_ENT_TEST);
+
+	// 9 + 1 (foo)
+	assert(r.data.rows.length === 10);
+	assert(r.data.meta.total === 10);
+	assert(r.data.meta.limit === 0);
+	assert(r.data.meta.offset === 0);
+
+	// sorted by _created_at by default
+	assert(r.data.rows[0].name === 'bar');
+	assert(r.data.rows[1].name === '1');
+	assert(r.data.rows[9].name === '9');
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { limit: 3 }));
+	assert(r.data.rows.length === 3);
+	assert(r.data.meta.total === 10);
+	assert(r.data.meta.limit === 3);
+	assert(r.data.meta.offset === 0);
+	assert(r.data.rows[0].name === 'bar');
+	assert(r.data.rows[1].name === '1');
+	assert(r.data.rows[2].name === '2');
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { limit: 2, offset: 5 }));
+	// clog(r.data);
+	assert(r.data.rows.length === 2);
+	assert(r.data.meta.total === 10);
+	assert(r.data.meta.limit === 2);
+	assert(r.data.meta.offset === 5);
+	assert(r.data.rows[0].name === '5');
+	assert(r.data.rows[1].name === '6');
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { limit: 2, offset: 100 }));
+	assert(r.data.rows.length === 0);
+	assert(r.data.meta.total === 10);
+	assert(r.data.meta.limit === 2);
+	assert(r.data.meta.offset === 100);
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { offset: 9 }));
+	// clog(r.data);
+	assert(r.data.rows.length === 1);
+	assert(r.data.meta.total === 10);
+	assert(r.data.meta.limit === 0);
+	assert(r.data.meta.offset === 9);
+	assert(r.data.rows[0].name === '9');
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { offset: 100 }));
+	assert(r.data.rows.length === 0);
+
+	//
+	r = await get(withQueryVars(API_ENT_TEST, { limit: 100 }));
+	assert(r.data.rows.length === 10);
+});
+
 suite.test('unknown collection returns 404', async () => {
-	let rnd = 'entity-' + Math.random().toString().substr(2, 5);
+	let rnd = 'entity-' + Math.random().toString().slice(2, 5);
 	await TestUtil.assertStatus(STATUS.NOT_FOUND, get(`${API_CMS}/${rnd}`));
 	await TestUtil.assertStatus(STATUS.NOT_FOUND, get(`${API_CMS}/${rnd}/123`));
 });

@@ -81,7 +81,7 @@ suite.test('fetchAll', async ({ storage }) => {
 	const repo = new Repository({ entity: 'foo', storage });
 	assert((await repo.count()) === 4);
 
-	let all = await repo.findAll((m) => /^b/i.test(m.name));
+	let all = (await repo.findAll((m) => /^b/i.test(m.name))).rows;
 	assert(all.length === 3);
 
 	// komparator zoraduje defaultne podla '_created_at' a data su umyselne naplnene
@@ -90,13 +90,13 @@ suite.test('fetchAll', async ({ storage }) => {
 	assert(all[1].id === '3');
 	assert(all[2].id === '2');
 
-	all = await repo.findAll({ name: 'foo' });
+	all = (await repo.findAll({ name: 'foo' })).rows;
 	assert(all.length === 1);
 });
 
 suite.test('fetchAll with no argument', async ({ storage }) => {
 	const repo = new Repository({ entity: 'foo', storage });
-	assert((await repo.findAll()).length === 4);
+	assert((await repo.findAll()).rows.length === 4);
 });
 
 suite.test('modify storage from outside', async () => {

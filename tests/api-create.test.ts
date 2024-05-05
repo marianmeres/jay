@@ -26,7 +26,7 @@ const correct = { email: TEST_USER_EMAIL, password: TEST_USER_PASSWORD };
 const suite = new TestRunner(path.basename(__filename), {
 	beforeEach: async () => {
 		TestUtil.cleanUpTestModels();
-		await TestUtil.createTestUserJsonFile(null, true);
+		await TestUtil.createTestUserJsonFile(undefined, true);
 	},
 	after: async () => {
 		TestUtil.cleanUpTestModels();

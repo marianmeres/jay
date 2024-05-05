@@ -208,7 +208,14 @@ export class Repository<T extends ModelLike> {
 		return await this._exec('preRead', found);
 	}
 
-	async findAll(where = null /* todo: limit = 0, offset = 0*/): Promise<Partial<T>[]> {
+	async findAll(
+		where: any = null,
+		limit: number = 0,
+		offset: number = 0
+	): Promise<{
+		rows: Partial<T>[];
+		meta: { total: number; limit: number; offset: number };
+	}> {
 		const withPreRead = async (values) => {
 			let out = [];
 			for (let v of values) {
@@ -218,11 +225,22 @@ export class Repository<T extends ModelLike> {
 		};
 
 		// otazka je, ci by preRead nemal by aplikovany uz na urovni _values...
+		let rows = where
+			? await withPreRead(_.filter(this._values(true), where))
+			: await withPreRead(this._values(true));
 
-		if (!where) {
-			return await withPreRead(this._values(true));
+		const total = rows.length;
+		limit = Math.abs(Math.round(limit));
+		offset = Math.abs(Math.round(offset));
+
+		// pg: OFFSET says to skip that many rows before beginning to return rows.
+		// OFFSET 0 is the same as omitting the OFFSET clause, as is OFFSET with a NULL argument.
+
+		if (limit || offset) {
+			rows = rows.slice(offset, limit ? offset + limit : undefined);
 		}
-		return await withPreRead(_.filter(this._values(true), where));
+
+		return { rows, meta: { total, limit, offset } };
 	}
 
 	async _assertExists(model: Partial<T>) {

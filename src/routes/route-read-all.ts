@@ -7,11 +7,18 @@ export const routeReadAll = async (req: Request, res: Response, next: NextFuncti
 	try {
 		const { entity } = req.params;
 		const { project } = res.locals as ApiServerLocals;
+		const { limit, offset } = req.query as any;
 
 		await Api.assertHasAccess(entity, req, Api.ACTION_READ_ALL, project);
 		const repo = await Crud.factoryRepository(entity, project);
 
-		res.json(Api.outputCollection(await repo.findAll()));
+		const { rows, meta } = await repo.findAll(
+			null,
+			parseInt(limit || 0),
+			parseInt(offset || 0)
+		);
+
+		res.json({ rows: Api.outputCollection(rows), meta });
 	} catch (e) {
 		next(e);
 	}

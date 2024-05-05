@@ -48,7 +48,7 @@ export const routeDump = async (req: Request, res: Response, next: NextFunction)
 			if (await Api.hasAccess(entity, await Api.getIdentityType(req), Api.ACTION_READ_ALL, project)) {
 				const repo = await Crud.factoryRepository(entity, project);
 				// return id based map instead of collection
-				out[entity] = Api.outputCollection(await repo.findAll()).reduce(
+				out[entity] = Api.outputCollection((await repo.findAll()).rows).reduce(
 					(memo, row) => ({ ...memo, [row.id]: row }),
 					{}
 				);
