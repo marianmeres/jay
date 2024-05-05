@@ -1,5 +1,5 @@
 # jay
 
-The naive, the json, the cms.
+The naive, the json, the CMS.
 
 Docs coming soon...

@@ -171,6 +171,21 @@ suite.test('collection limit offset', async () => {
 	assert(r.data.rows.length === 10);
 });
 
+suite.test('collection limit offset invalid params', async () => {
+	for (let p of [
+		{ limit: -1 },
+		{ offset: -1 },
+		{ limit: 'foo' },
+		{ offset: 'bar' },
+		{ limit: 'foo', offset: '-1' },
+	]) {
+		await TestUtil.assertStatus(
+			STATUS.INTERNAL_SERVER_ERROR,
+			get(withQueryVars(API_ENT_TEST, p))
+		);
+	}
+});
+
 suite.test('unknown collection returns 404', async () => {
 	let rnd = 'entity-' + Math.random().toString().slice(2, 5);
 	await TestUtil.assertStatus(STATUS.NOT_FOUND, get(`${API_CMS}/${rnd}`));

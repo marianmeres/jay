@@ -230,13 +230,18 @@ export class Repository<T extends ModelLike> {
 			: await withPreRead(this._values(true));
 
 		const total = rows.length;
-		limit = Math.abs(Math.round(limit));
-		offset = Math.abs(Math.round(offset));
+		limit = Math.round(limit);
+		offset = Math.round(offset);
 
-		// pg: OFFSET says to skip that many rows before beginning to return rows.
-		// OFFSET 0 is the same as omitting the OFFSET clause, as is OFFSET with a NULL argument.
+		[limit, offset].forEach((v) => {
+			if (Number.isNaN(v) || v < 0) {
+				throw new Error(`Invalid limit and/or offset parameter`);
+			}
+		});
 
 		if (limit || offset) {
+			// pg: OFFSET says to skip that many rows before beginning to return rows.
+			// OFFSET 0 is the same as omitting the OFFSET clause, as is OFFSET with a NULL argument.
 			rows = rows.slice(offset, limit ? offset + limit : undefined);
 		}
 

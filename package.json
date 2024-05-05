@@ -1,7 +1,7 @@
 {
 	"name": "@marianmeres/jay",
 	"version": "1.0.0",
-	"description": "The naive, the json, the cms",
+	"description": "The naive, the json, the CMS",
 	"main": "./build/index.js",
 	"types": "./build/index.d.ts",
 	"type": "module",
@@ -13,7 +13,7 @@
 		"test": "env-cmd -- node --loader ts-node/esm tests/index.ts",
 		"test:watch": "nodemon --delay 0.5 -q -w \"src/**/*.*\" -w \"tests/**/*.*\" -x \"node --loader ts-node/esm tests/index.ts\" --",
 		"prettier": "prettier --write \"src/**/*.{js,ts,json}\"",
-		"pswhash": "node password-hash.js"
+		"pswhash": "node password-hash.cjs"
 	},
 	"repository": {
 		"type": "git",
