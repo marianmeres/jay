@@ -4,10 +4,10 @@ import fs from 'fs';
 import { del, patch } from 'httpie';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { Config } from '../config.js';
-import { STATUS } from '../lib/constants.js';
-import { Asset } from '../services/asset.js';
-import { Project } from '../services/project.js';
+import { Config } from '../src/config.js';
+import { STATUS } from '../src/lib/constants.js';
+import { Asset } from '../src/services/asset.js';
+import { Project } from '../src/services/project.js';
 import { API_ENT_ASSET, TestUtil } from './_test-util.js';
 
 const __filename = fileURLToPath(import.meta.url);

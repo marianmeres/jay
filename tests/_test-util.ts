@@ -7,14 +7,14 @@ import _ from 'lodash';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { totalist } from 'totalist/sync/index.js';
-import { Config } from '../config.js';
-import { API_CMS_PREFIX, ROUTE } from '../lib/api-server.js';
-import { STATUS } from '../lib/constants.js';
-import { UserModel } from '../lib/types.js';
-import { AssetModel } from '../services/asset.js';
-import { Project } from '../services/project.js';
-import { ModelLike } from '../utils/repository.js';
-import { modelUid } from '../utils/uuid.js';
+import { Config } from '../src/config.js';
+import { API_CMS_PREFIX, ROUTE } from '../src/lib/api-server.js';
+import { STATUS } from '../src/lib/constants.js';
+import { UserModel } from '../src/lib/types.js';
+import { AssetModel } from '../src/services/asset.js';
+import { Project } from '../src/services/project.js';
+import { ModelLike } from '../src/utils/repository.js';
+import { modelUid } from '../src/utils/uuid.js';
 
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 

@@ -3,7 +3,7 @@ import { strict as assert } from 'assert';
 import _ from 'lodash';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { InvalidModel, InvalidSchema, Schema } from './schema.js';
+import { InvalidModel, InvalidSchema, Schema } from '../../src/services/schema.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

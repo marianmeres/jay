@@ -6,8 +6,8 @@ import _ from 'lodash';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 import rimraf from 'rimraf';
-import { Config } from '../config.js';
-import { Asset } from './asset.js';
+import { Config } from '../../src/config.js';
+import { Asset } from '../../src/services/asset.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

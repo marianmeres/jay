@@ -2,8 +2,8 @@ import { TestRunner } from '@marianmeres/test-runner';
 import { strict as assert } from 'assert';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { Forbidden } from '../utils/errors.js';
-import { Api } from './api.js';
+import { Forbidden } from '../../src/utils/errors.js';
+import { Api } from '../../src/services/api.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

@@ -5,11 +5,11 @@ import { get, post } from 'httpie';
 import _ from 'lodash';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { Config } from '../config.js';
-import { ROUTE } from '../lib/api-server.js';
-import { STATUS } from '../lib/constants.js';
-import { Api } from '../services/api.js';
-import { Project } from '../services/project.js';
+import { Config } from '../src/config.js';
+import { ROUTE } from '../src/lib/api-server.js';
+import { STATUS } from '../src/lib/constants.js';
+import { Api } from '../src/services/api.js';
+import { Project } from '../src/services/project.js';
 import {
 	API,
 	API_ENT_TEST,

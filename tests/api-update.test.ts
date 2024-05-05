@@ -3,7 +3,7 @@ import { strict as assert } from 'assert';
 import { patch, post } from 'httpie';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { STATUS } from '../lib/constants.js';
+import { STATUS } from '../src/lib/constants.js';
 import { API_ENT_TEST, TestUtil } from './_test-util.js';
 
 const __filename = fileURLToPath(import.meta.url);

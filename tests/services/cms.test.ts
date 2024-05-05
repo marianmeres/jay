@@ -3,10 +3,10 @@ import { strict as assert } from 'assert';
 import _ from 'lodash';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { Config } from '../config.js';
-import { Cms } from './cms.js';
-import { Project } from './project.js';
-import { TestUtil } from '../__tests__/_test-util.js';
+import { Config } from '../../src/config.js';
+import { Cms } from '../../src/services/cms.js';
+import { Project } from '../../src/services/project.js';
+import { TestUtil } from '../_test-util.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

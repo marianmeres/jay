@@ -3,8 +3,8 @@ import { strict as assert } from 'assert';
 import { post } from 'httpie';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { ROUTE } from '../lib/api-server.js';
-import { STATUS } from '../lib/constants.js';
+import { ROUTE } from '../src/lib/api-server.js';
+import { STATUS } from '../src/lib/constants.js';
 import { API, TEST_USER_EMAIL, TEST_USER_PASSWORD, TestUtil } from './_test-util.js';
 
 const __filename = fileURLToPath(import.meta.url);
