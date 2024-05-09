@@ -187,9 +187,7 @@ export class Crud {
 			for (let k of uniqueKeys) {
 				if (notEmpty(_data[k]) && notEmpty(data[k]) && _data[k] === data[k]) {
 					throw new Error(
-						`Record with property "${k}" and value "${
-							data[k]
-						}" already exists! (${JSON.stringify({ [k]: data[k] })})`
+						`Value "${data[k]}" for unique property "${k}" already exists! (${JSON.stringify({ [k]: data[k] })})`
 					);
 				}
 			}

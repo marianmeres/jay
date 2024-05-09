@@ -9,6 +9,7 @@ import { STATUS } from '../lib/constants.js';
 import { Api } from '../services/api.js';
 import { Asset, AssetModel } from '../services/asset.js';
 import { Crud } from '../services/crud.js';
+import { Token } from '../services/token.js';
 
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
@@ -31,7 +32,9 @@ export const routeUpload = async (req: Request, res: Response, next: NextFunctio
 		!skipHasAccessCheck &&
 			(await Api.assertHasAccess(Config.ENTITY_ASSET, req, Api.ACTION_CREATE, project));
 
-		const repo = await Crud.factoryRepository<AssetModel>(Config.ENTITY_ASSET, project);
+		const repo = await Crud.factoryRepository<AssetModel>(Config.ENTITY_ASSET, project, {
+			identity: await Token.getToken(Api.getToken(req)),
+		});
 
 		form.parse(req, async (err, fields, files) => {
 			if (err) {
