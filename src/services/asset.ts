@@ -47,6 +47,7 @@ export interface AssetModel extends AssetInputData, AssetMeta, ModelLike {
 	_format: Partial<{
 		thumbnail: ImageFormatMeta;
 		small: ImageFormatMeta;
+		large: ImageFormatMeta;
 	}>;
 }
 
@@ -166,6 +167,31 @@ export class Asset {
 					_size: resizedMeta._size,
 					_assetFilename: path.basename(outfile),
 				};
+			}
+		}
+
+		// new 2024 feature - always have all 'thumbnail', 'small', 'large' data present
+		// (even if the actual files will not have been created - always use the largest
+		// nearest match)
+		if (Asset.isImage(filename)) {
+			const _pickLarger = (a: ImageFormatMeta, b: ImageFormatMeta) =>
+				a._width > b._width && a._height > b._height ? a : b;
+
+			// prettier-ignore
+			let nearest = { _width: out._width, _height: out._height, _size: out._size, _assetFilename: out._assetFilename };
+
+			//
+			if (!out._format?.thumbnail) out._format.thumbnail = nearest;
+
+			//
+			if (!out._format?.small) {
+				nearest = _pickLarger(nearest, out._format.thumbnail);
+				out._format.small = nearest;
+			}
+
+			//
+			if (!out._format?.large) {
+				out._format.large = _pickLarger(nearest, out._format.small);
 			}
 		}
 

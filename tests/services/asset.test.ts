@@ -25,6 +25,8 @@ const catMd5 = 'a321660d5f0a585335ed3e7965cb7e9b';
 // const assetCatJpg = path.join(Config.PROJECT_DATA_DIR, 'cat.jpg');
 // const assetFooTxt = path.join(Config.PROJECT_DATA_DIR, 'foo.txt');
 
+const IMG_FORMAT_KEYS = ['_width', '_height', '_size', '_assetFilename'];
+
 const suite = new TestRunner(path.basename(__filename), {
 	beforeEach: () => {
 		rimraf.sync(tmpTestDir);
@@ -171,8 +173,11 @@ suite.test('create small asset file works', async () => {
 
 	assert(fs.existsSync(path.join(tmpTestDir, r._assetFilename)));
 	assert(fs.existsSync(path.join(tmpTestDir, r._format.thumbnail._assetFilename)));
-	// small nesmie existovat!!!
-	assert(!r._format.small);
+
+	// clog(r);
+	// both 'small' and 'large' must exists, but must be identical to original
+	assert(_.isEqual(r._format.small, _.pick(r, IMG_FORMAT_KEYS)));
+	assert(_.isEqual(r._format.large, _.pick(r, IMG_FORMAT_KEYS)));
 });
 
 // suite.only('resize svg works', async () => {
