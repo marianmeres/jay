@@ -48,6 +48,7 @@ export interface AssetModel extends AssetInputData, AssetMeta, ModelLike {
 		thumbnail: ImageFormatMeta;
 		small: ImageFormatMeta;
 		large: ImageFormatMeta;
+		max: ImageFormatMeta;
 	}>;
 }
 
@@ -178,7 +179,8 @@ export class Asset {
 				a._width > b._width && a._height > b._height ? a : b;
 
 			// prettier-ignore
-			let nearest = { _width: out._width, _height: out._height, _size: out._size, _assetFilename: out._assetFilename };
+			let orig = { _width: out._width, _height: out._height, _size: out._size, _assetFilename: out._assetFilename };
+			let nearest = { ...orig };
 
 			//
 			if (!out._format?.thumbnail) out._format.thumbnail = nearest;
@@ -191,8 +193,12 @@ export class Asset {
 
 			//
 			if (!out._format?.large) {
-				out._format.large = _pickLarger(nearest, out._format.small);
+				nearest = _pickLarger(nearest, out._format.small);
+				out._format.large = nearest;
 			}
+
+			// max is never created
+			out._format.max = _pickLarger(orig, out._format.large);
 		}
 
 		if (deleteSourceAssetFile) {

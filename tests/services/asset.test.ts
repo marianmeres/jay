@@ -17,6 +17,7 @@ const srcCatJpg = path.join(Config.SRC_DATA_DIR, 'cat.jpg');
 const srcCat2Jpg = path.join(Config.SRC_DATA_DIR, 'cat-vertical.jpg');
 const srcCat3Jpg = path.join(Config.SRC_DATA_DIR, 'cat-square.jpg');
 const srcCat4Jpg = path.join(Config.SRC_DATA_DIR, 'cat-square-small.jpg');
+const srcLsJpg = path.join(Config.SRC_DATA_DIR, 'ls.jpg');
 const srcFooTxt = path.join(Config.SRC_DATA_DIR, 'foo.txt');
 const srcSvg = path.join(Config.SRC_DATA_DIR, 'circle.svg');
 const tmpTestDir = path.join(Config.CMS_TEMP_DIR, 'asset-test');
@@ -153,31 +154,47 @@ suite.test('create asset file works', async () => {
 		false
 	);
 
+	// clog(r);
+
 	assert(fs.existsSync(path.join(tmpTestDir, r._assetFilename)));
 	assert(fs.existsSync(path.join(tmpTestDir, r._format.thumbnail._assetFilename)));
 	assert(fs.existsSync(path.join(tmpTestDir, r._format.small._assetFilename)));
+
+	// all must exist
+	assert(r._format?.small);
+	assert(r._format?.large);
+	assert(r._format?.thumbnail);
+	assert(r._format?.max);
+
+	// max is the original in this case
+	assert(r._format?.max._assetFilename === r._assetFilename);
 });
 
 suite.test('create small asset file works', async () => {
-	const r = await Asset.createAssetFile(
-		srcCat4Jpg,
-		{
-			title: 'Tom',
-			description: 'the Jerry chaser',
-			alt: 'cat image',
-			folder: '/cats',
-		},
-		tmpTestDir,
-		false
-	);
+	const r = await Asset.createAssetFile(srcLsJpg, {}, tmpTestDir, false);
 
 	assert(fs.existsSync(path.join(tmpTestDir, r._assetFilename)));
 	assert(fs.existsSync(path.join(tmpTestDir, r._format.thumbnail._assetFilename)));
 
+	// all must exist
+	assert(r._format?.small);
+	assert(r._format?.large);
+	assert(r._format?.thumbnail);
+	assert(r._format?.max);
+
+	// max, and large is the original in this case
+	assert(r._format?.max._assetFilename === r._assetFilename);
+	assert(r._format?.large._assetFilename === r._assetFilename);
+
+	// small and thumbnail are separate
+	assert(r._format?.thumbnail._assetFilename.includes('thumbnail'));
+	assert(r._format?.small._assetFilename.includes('small'));
+
 	// clog(r);
+
 	// both 'small' and 'large' must exists, but must be identical to original
-	assert(_.isEqual(r._format.small, _.pick(r, IMG_FORMAT_KEYS)));
-	assert(_.isEqual(r._format.large, _.pick(r, IMG_FORMAT_KEYS)));
+	// assert(_.isEqual(r._format.small, _.pick(r, IMG_FORMAT_KEYS)));
+	// assert(_.isEqual(r._format.large, _.pick(r, IMG_FORMAT_KEYS)));
 });
 
 // suite.only('resize svg works', async () => {
