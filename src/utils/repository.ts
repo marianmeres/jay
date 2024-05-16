@@ -45,6 +45,7 @@ const _defatultComparator = (a: ModelLike, b: ModelLike): number => {
 	if (!a._created_at || !b._created_at) {
 		return 0;
 	}
+	// by default ordering by created asc
 	return new Date(a._created_at).valueOf() - new Date(b._created_at).valueOf();
 };
 
@@ -211,7 +212,10 @@ export class Repository<T extends ModelLike> {
 	async findAll(
 		where: any = null,
 		limit: number = 0,
-		offset: number = 0
+		offset: number = 0,
+		// custom ordering outside of the internal comparator
+		orderBy?: string,
+		orderAsc: boolean = true
 	): Promise<{
 		rows: Partial<T>[];
 		meta: { total: number; limit: number; offset: number };
@@ -228,6 +232,17 @@ export class Repository<T extends ModelLike> {
 		let rows = where
 			? await withPreRead(_.filter(this._values(true), where))
 			: await withPreRead(this._values(true));
+
+		// custom ordering?
+		if (orderBy) {
+			rows.sort((a: ModelLike, b: ModelLike): number => {
+				const k = orderBy;
+				if (!a?.[k] || !b?.[k]) return 0;
+				return orderAsc
+					? `${a?.[k]}`.localeCompare(`${b?.[k]}`)
+					: `${b?.[k]}`.localeCompare(`${a?.[k]}`);
+			});
+		}
 
 		const total = rows.length;
 		limit = Math.round(limit);

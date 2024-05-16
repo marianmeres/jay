@@ -15,7 +15,10 @@ export const routeReadAll = async (req: Request, res: Response, next: NextFuncti
 		const { rows, meta } = await repo.findAll(
 			null,
 			parseInt(limit || 0),
-			parseInt(offset || 0)
+			parseInt(offset || 0),
+			// ordering byt _create_at desc here
+			'_created_at',
+			false
 		);
 
 		res.json({ rows: Api.outputCollection(rows), meta });
