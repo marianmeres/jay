@@ -25,7 +25,15 @@ const __dirname = path.dirname(__filename);
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 //
-const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS, HTTPS_CERT, HTTPS_KEY } = Config;
+const {
+	HOST,
+	PORT,
+	CONSOLE_LOG_REQUESTS,
+	CMS_PROJECTS,
+	HTTPS_CERT,
+	HTTPS_KEY,
+	CLIENT_STATIC_DIR,
+} = Config;
 
 //
 const app = express();
@@ -48,6 +56,10 @@ app.use((req, res, next) => {
 	}
 	next();
 });
+
+if (CLIENT_STATIC_DIR) {
+	app.use(`/client`, express.static(CLIENT_STATIC_DIR, { dotfiles: 'deny' }));
+}
 
 //
 app.get('/', async (req, res) => {
