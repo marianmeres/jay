@@ -6,7 +6,6 @@ import fs from 'fs';
 import path from 'node:path';
 import { fileURLToPath } from 'url';
 import { Project, ProjectConfig } from './services/project.js';
-import { gray } from 'kleur/colors';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
