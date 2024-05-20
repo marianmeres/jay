@@ -7,19 +7,25 @@ import compression from 'compression';
 import express from 'express';
 import { bold, gray, green, red, yellow } from 'kleur/colors';
 import isEmpty from 'lodash/isEmpty.js';
+import fs from 'node:fs';
 import path from 'node:path';
+import https from 'node:https';
+import http from 'node:http';
 import { fileURLToPath } from 'node:url';
 import tinydate from 'tinydate';
 import { Config } from './config.js';
 import { createApiServer } from './lib/api-server.js';
+import { corsFn } from './lib/middleware/cors-fn.js';
 import { Api } from './services/api.js';
 import { Project } from './services/project.js';
-import { corsFn } from './lib/middleware/cors-fn.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 //
-const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS } = Config;
+const { HOST, PORT, CONSOLE_LOG_REQUESTS, CMS_PROJECTS, HTTPS_CERT, HTTPS_KEY } = Config;
 
 //
 const app = express();
@@ -60,7 +66,24 @@ if (!isEmpty(CMS_PROJECTS)) {
 	clog.error('Empty CMS_PROJECTS config...');
 }
 
-app.listen(PORT as any, HOST, () => {
+//
+let server;
+let isHttps = false;
+
+//
+if (HTTPS_CERT && HTTPS_KEY) {
+	const _readFile = (name: string) => fs.readFileSync(path.join(process.cwd(), name));
+	server = https.createServer(
+		{ key: _readFile(HTTPS_KEY), cert: _readFile(HTTPS_CERT) },
+		app
+	);
+	isHttps = true;
+} else {
+	server = http.createServer(app);
+}
+
+// start now
+server.listen(PORT as any, HOST, () => {
 	const ts = tinydate('({HH}:{mm}:{ss}) ')();
-	clog(gray(`${ts}`) + green(bold(`Listening on http://${HOST}:${PORT} ...`)));
+	clog(gray(`${ts}`) + green(bold(`✓ http${isHttps ? 's' : ''}://${HOST}:${PORT} ...`)));
 });

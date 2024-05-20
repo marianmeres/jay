@@ -17,6 +17,10 @@ let {
 	HOST = '0.0.0.0',
 	NODE_ENV = 'production',
 	//
+	HTTPS_KEY = null,
+	HTTPS_CERT = null,
+
+	//
 	SRC_DATA_DIR = 'data',
 	CMS_TEMP_DIR = 'tmp',
 
@@ -64,6 +68,10 @@ export class Config {
 	static readonly HOST = HOST;
 	static readonly NODE_ENV = NODE_ENV;
 	static readonly IS_PRODUCTION = /production/i.test(NODE_ENV);
+
+	//
+	static readonly HTTPS_KEY = HTTPS_KEY;
+	static readonly HTTPS_CERT = HTTPS_CERT;
 
 	//
 	static readonly SRC_DATA_DIR = SRC_DATA_DIR;
