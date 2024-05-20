@@ -7,7 +7,9 @@ tmp/**
 node_modules
 build/*
 .idea/*
-# .cert/*
+.cert/*
+!.cert/localhost-key.pem
+!.cert/localhost-cert.pem
 
 
 
