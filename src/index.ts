@@ -58,7 +58,10 @@ app.use((req, res, next) => {
 });
 
 if (DEFAULT_CLIENT_STATIC_MOUNT_PATH) {
-	app.use('./admin', express.static('', { dotfiles: 'deny' }));
+	app.use(
+		DEFAULT_CLIENT_STATIC_MOUNT_PATH,
+		express.static('./admin', { dotfiles: 'deny' })
+	);
 }
 
 //

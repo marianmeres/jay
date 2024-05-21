@@ -38,9 +38,9 @@ const PROJECT_ROOT_DIR = path.resolve(__dirname, '../');
 	CMS_TEMP_DIR          = path.join(PROJECT_ROOT_DIR, CMS_TEMP_DIR);
 }
 
-// read and normalize cms_projects.config.json
+// read and normalize projects.config.json
 let CMS_PROJECTS = JSON.parse(
-	fs.readFileSync(path.join(PROJECT_ROOT_DIR, 'cms_projects.config.json'), 'utf8')
+	fs.readFileSync(path.join(PROJECT_ROOT_DIR, 'projects.config.json'), 'utf8')
 )
 	.map(({ id, name, dataDir, publicDir, uploadDir, hidden }): ProjectConfig => {
 		id = Project.normalizeName(id);
