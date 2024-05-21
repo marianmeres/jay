@@ -6,7 +6,7 @@ The naive, the JSON, the CMS.
 
 ### The CMS
 
-_Jay_ is a simple headless CMS server offering a basic REST interface for managing arbitrary documents and assets. It includes a basic CRUD authentication system. Document types and schemas are defined using YAML definition files, ensuring validation. One server instance is capable of handling multiple isolated projects, which can be configured with ease. Notably, _jay_ operates without the need for a traditional database.
+_Jay_ is a simple, [express](https://expressjs.com/) based CMS server offering a basic REST interface for managing arbitrary documents and assets. It includes a basic CRUD authentication system. Document types and schemas are defined using YAML definition files, ensuring validation. One server instance is capable of handling multiple isolated projects, which can be configured with ease. Notably, _jay_ operates without the need for a traditional database.
 
 ### The JSON
 
@@ -16,7 +16,7 @@ Asset source files are saved to a separately configured directory. Images are au
 
 ### The naive
 
-_Jay_ keeps all the data in memory, with serialization to disk occurring only during write operations. This design results in high speed but limited scalability. For managing thousands of documents, many concurrent write operations or distributing instances across multiple nodes, alternative solutions should be considered.
+_Jay_ keeps all the data in memory, with serialization to disk occurring only during write operations. This design results in high speed but limited scalability. For managing many thousands of documents, perhaps many potential concurrent write operations or the need to distribute multiple server instances across multiple nodes, alternative solutions should be considered.
 
 ## The built in admin client GUI
 
