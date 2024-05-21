@@ -11,5 +11,6 @@ build/*
 !.cert/localhost-key.pem
 !.cert/localhost-cert.pem
 
+run-local-watch.sh
 
 

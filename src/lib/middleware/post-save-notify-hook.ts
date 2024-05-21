@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const clog = createClog(path.basename(fileURLToPath(import.meta.url)));
 
 /**
- * Pod "write" sa mysli akoze "create", "update" alebo "delete"
+ * "write" means "create", "update" or "delete"
  * @param req
  * @param res
  * @param next

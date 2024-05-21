@@ -32,7 +32,7 @@ const {
 	CMS_PROJECTS,
 	HTTPS_CERT,
 	HTTPS_KEY,
-	CLIENT_STATIC_DIR,
+	DEFAULT_CLIENT_STATIC_MOUNT_PATH,
 } = Config;
 
 //
@@ -57,8 +57,8 @@ app.use((req, res, next) => {
 	next();
 });
 
-if (CLIENT_STATIC_DIR) {
-	app.use(`/client`, express.static(CLIENT_STATIC_DIR, { dotfiles: 'deny' }));
+if (DEFAULT_CLIENT_STATIC_MOUNT_PATH) {
+	app.use('./admin', express.static('', { dotfiles: 'deny' }));
 }
 
 //

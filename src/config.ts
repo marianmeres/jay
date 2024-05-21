@@ -16,7 +16,7 @@ let {
 	HOST = '0.0.0.0',
 	NODE_ENV = 'production',
 	//
-	CLIENT_STATIC_DIR = null,
+	DEFAULT_CLIENT_STATIC_MOUNT_PATH = null,
 	//
 	HTTPS_KEY = null,
 	HTTPS_CERT = null,
@@ -71,7 +71,7 @@ export class Config {
 	static readonly IS_PRODUCTION = /production/i.test(NODE_ENV);
 
 	//
-	static readonly CLIENT_STATIC_DIR = CLIENT_STATIC_DIR;
+	static readonly DEFAULT_CLIENT_STATIC_MOUNT_PATH = DEFAULT_CLIENT_STATIC_MOUNT_PATH;
 
 	//
 	static readonly HTTPS_KEY = HTTPS_KEY;
