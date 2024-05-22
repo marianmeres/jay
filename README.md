@@ -1,26 +1,32 @@
 # @marianmeres/jay
 
-The naive, the JSON, the CMS.
+The Naive, the JSON, the CMS.
 
 ## About
 
 ### The CMS
 
-_Jay_ is a simple, [express](https://expressjs.com/) based CMS server offering a basic REST interface for managing arbitrary documents and assets. It includes a basic CRUD authentication system. Document types and schemas are defined using YAML definition files, ensuring validation. One server instance is capable of handling multiple isolated projects, which can be configured with ease. Notably, _jay_ operates without the need for a traditional database.
+_Jay_ is a Node.js-based CMS server that provides a REST interface for managing and serving any documents and assets. It features a basic CRUD authentication system and allows document types and schemas to be defined using YAML definition files, ensuring proper validation.
+
+A single _Jay_ server instance can support multiple isolated projects, each configurable with ease.
+
+Notably, _Jay_ operates without the need for a traditional database.
 
 ### The JSON
 
-All documents data are serialized to the filesystem in the form of a pretty printed JSON files, which can be edited by hand if needed.
+All document data is serialized to the filesystem as well-formatted JSON files, which can be manually edited if needed.
 
-Asset source files are saved to a separately configured directory. Images are automatically recognized and stored with resized variants as well.
+Asset source files are efficiently stored in a separate configured directory, avoiding duplication. Additionally, images are automatically recognized and stored with resized variants.
 
-### The naive
+### The Naive
 
-_Jay_ keeps all the data in memory, with serialization to disk occurring only during write operations. This design results in high speed but limited scalability. For managing many thousands of documents, perhaps many potential concurrent write operations or the need to distribute multiple server instances across multiple nodes, alternative solutions should be considered.
+_Jay_ maintains all data in memory, with serialization to disk occurring only during write operations. This design choice results in high performance but limits scalability.
 
-## The built in admin client GUI
+For managing a vast number of documents, handling numerous concurrent write operations, or distributing multiple instances across multiple nodes, alternative solutions should be considered.
 
-The server comes with a built-in admin GUI interface, by default served on the `/admin/` mount path. (This client is a work in progress and closed source)
+## The built-in admin GUI
+
+_Jay_ comes with a bundled brother _Joy_ - a nice admin GUI. This GUI is an ongoing work-in-progress and not open source.
 
 ## Installation instructions
 
