@@ -9,6 +9,5 @@ if (!args[0]) {
 }
 
 bcrypt.hash(args[0], 10, (err, hash) => {
-	// console.log(args);
 	console.log(err ? `Error: ${err}` : hash);
 });

@@ -1,7 +1,7 @@
 #!/bin/sh
 
 nodemon \ 
-    -w "/absolute/path/to/cms/project/data1" \
-    -w "/absolute/path/to/cms/project/data2" \
+    -w "/absolute/path/to/project1/data" \
+    -w "/absolute/path/to/project2/data" \
     -e "yaml" \
     build
