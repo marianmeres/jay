@@ -7,11 +7,12 @@ _access:
         delete: false
 
 _schema:
-    title: User
-    description: Collection of CMS users
     required:
         - email
         - role
+
+    description: >
+        System collection. Features limited.
     properties:
         email:
             type: string
@@ -42,4 +43,4 @@ _schema:
                 - bcrypt
             _order: 999
 
-    _order: 999
+    _order: 9999999

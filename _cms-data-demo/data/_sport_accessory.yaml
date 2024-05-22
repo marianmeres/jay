@@ -1,0 +1,21 @@
+_access:
+    public:
+        read_one: true
+        read_all: true
+
+_schema:
+    title: Accessories
+    description: Just a dummy example collection
+    required:
+    properties:
+        name:
+            type: string
+            _html:
+                description:
+            _unique: true
+            _cms_collection_view_visible: true
+            _natural_id: true
+            _transform:
+            _order: 10
+
+    _order: 2

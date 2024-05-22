@@ -1,0 +1,46 @@
+{
+	"folder": "/misc/",
+	"title": "",
+	"description": "",
+	"alt": "",
+	"enabled": true,
+	"custom": "",
+	"_name": "atom.svg",
+	"_extension": ".svg",
+	"_mime": "image/svg+xml",
+	"_size": 504,
+	"_width": 100,
+	"_height": 100,
+	"_hash": "a179bd2766028879323ac9c09ed4c6ad",
+	"_assetFilename": "a179bd2766028879323ac9c09ed4c6ad.svg",
+	"_format": {
+		"thumbnail": {
+			"_width": 80,
+			"_height": 80,
+			"_size": 5461,
+			"_assetFilename": "a179bd2766028879323ac9c09ed4c6ad_thumbnail.png"
+		},
+		"small": {
+			"_width": 100,
+			"_height": 100,
+			"_size": 504,
+			"_assetFilename": "a179bd2766028879323ac9c09ed4c6ad.svg"
+		},
+		"large": {
+			"_width": 100,
+			"_height": 100,
+			"_size": 504,
+			"_assetFilename": "a179bd2766028879323ac9c09ed4c6ad.svg"
+		},
+		"max": {
+			"_width": 100,
+			"_height": 100,
+			"_size": 504,
+			"_assetFilename": "a179bd2766028879323ac9c09ed4c6ad.svg"
+		}
+	},
+	"id": "1716-3970-56AC-5ACA",
+	"_created_at": "2024-05-22T16:57:36.340Z",
+	"_updated_at": "2024-05-22T16:57:36.340Z",
+	"_owner": "admin-to-be-deleted"
+}

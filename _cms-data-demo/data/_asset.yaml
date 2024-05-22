@@ -11,13 +11,15 @@ _schema:
     properties:
         folder:
             type: string
+            _cms_collection_view_visible: true
             _html:
-                label: folder
+                description: >
+                    Optional text label used for categorization. It is recommended to use 
+                    path-like, hierarchical labels, e.g. "/some-event/photos/"
             _order: 10
 
         title:
             type: string
-            _cms_collection_view_visible: true
             _natural_id: true
             _order: 20
 
@@ -27,18 +29,39 @@ _schema:
                 type: markdown
             _order: 30
 
-        custom:
-            type:
-                - array
-                - 'null'
-            _html:
-                type: omap
-                label: Dáta
+        alt:
+            type: string
+            _order: 40
 
         _name:
             type: string
             _cms_collection_view_visible: true
             _natural_id: true
+            _order: 5
+
+        enabled:
+            type: boolean
+            _html:
+                type: checkbox
+                description: Master enable/disable entity switch.
+            _default: true
+            _transform:
+                - boolean
+            # _cms_collection_view_visible: true
+            _order: 100
+
+        custom:
+            type:
+                - array
+                - number
+                - string
+                - object
+                - 'null'
+            _html:
+                type: any
+                description: >
+                    Optional, arbitrary data.
+            _order: 999
 
         _extension:
             type: string
@@ -72,4 +95,5 @@ _schema:
             _transform:
                 - none
 
-    _order: 99999
+    _order: 0
+    _iconFn: iconFeatherImage

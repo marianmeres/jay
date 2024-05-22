@@ -1,7 +1,7 @@
 [
 	{
-		"id": "test",
-		"dataDir": "_test-cms-data/cms-data",
-		"publicDir": "_test-cms-data/public"
+		"id": "demo",
+		"dataDir": "_cms-data-demo/data",
+		"publicDir": "_cms-data-demo/public"
 	}
 ]

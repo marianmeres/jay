@@ -1,0 +1,46 @@
+{
+	"folder": "/misc/",
+	"title": "",
+	"description": "",
+	"alt": "",
+	"enabled": true,
+	"custom": "",
+	"_name": "ls.jpg",
+	"_extension": ".jpg",
+	"_mime": "image/jpeg",
+	"_size": 58480,
+	"_width": 1194,
+	"_height": 756,
+	"_hash": "a0e2df86fede757a87fb2eb86d1bf9d7",
+	"_assetFilename": "a0e2df86fede757a87fb2eb86d1bf9d7.jpg",
+	"_format": {
+		"small": {
+			"_width": 640,
+			"_height": 405,
+			"_size": 33897,
+			"_assetFilename": "a0e2df86fede757a87fb2eb86d1bf9d7_small.jpg"
+		},
+		"thumbnail": {
+			"_width": 80,
+			"_height": 50,
+			"_size": 1730,
+			"_assetFilename": "a0e2df86fede757a87fb2eb86d1bf9d7_thumbnail.jpg"
+		},
+		"large": {
+			"_width": 1194,
+			"_height": 756,
+			"_size": 58480,
+			"_assetFilename": "a0e2df86fede757a87fb2eb86d1bf9d7.jpg"
+		},
+		"max": {
+			"_width": 1194,
+			"_height": 756,
+			"_size": 58480,
+			"_assetFilename": "a0e2df86fede757a87fb2eb86d1bf9d7.jpg"
+		}
+	},
+	"id": "1716-3954-7891-D1EE",
+	"_created_at": "2024-05-22T16:31:18.071Z",
+	"_updated_at": "2024-05-22T16:31:18.071Z",
+	"_owner": "admin-to-be-deleted"
+}

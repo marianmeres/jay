@@ -1,0 +1,46 @@
+{
+	"folder": "/misc/",
+	"title": "",
+	"description": "",
+	"alt": "",
+	"enabled": true,
+	"custom": "",
+	"_name": "cartman.svg",
+	"_extension": ".svg",
+	"_mime": "image/svg+xml",
+	"_size": 1148,
+	"_width": 104,
+	"_height": 97,
+	"_hash": "5713db3ac5d638cac47c3ba3b9b265ee",
+	"_assetFilename": "5713db3ac5d638cac47c3ba3b9b265ee.svg",
+	"_format": {
+		"thumbnail": {
+			"_width": 80,
+			"_height": 75,
+			"_size": 3479,
+			"_assetFilename": "5713db3ac5d638cac47c3ba3b9b265ee_thumbnail.png"
+		},
+		"small": {
+			"_width": 104,
+			"_height": 97,
+			"_size": 1148,
+			"_assetFilename": "5713db3ac5d638cac47c3ba3b9b265ee.svg"
+		},
+		"large": {
+			"_width": 104,
+			"_height": 97,
+			"_size": 1148,
+			"_assetFilename": "5713db3ac5d638cac47c3ba3b9b265ee.svg"
+		},
+		"max": {
+			"_width": 104,
+			"_height": 97,
+			"_size": 1148,
+			"_assetFilename": "5713db3ac5d638cac47c3ba3b9b265ee.svg"
+		}
+	},
+	"id": "1716-3970-56C5-ACAB",
+	"_created_at": "2024-05-22T16:57:36.341Z",
+	"_updated_at": "2024-05-22T16:57:36.341Z",
+	"_owner": "admin-to-be-deleted"
+}

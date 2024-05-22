@@ -1,0 +1,14 @@
+{
+	"name": "Swimming",
+	"description": "",
+	"is_individual": true,
+	"enabled": true,
+	"custom": "",
+	"id": "1716-3954-4249-1D1E",
+	"_created_at": "2024-05-22T16:30:42.995Z",
+	"_updated_at": "2024-05-22T16:57:02.880Z",
+	"_owner": "admin-to-be-deleted",
+	"accessory_id": [
+		"_sport_accessory/1716-3968-0409-3182"
+	]
+}

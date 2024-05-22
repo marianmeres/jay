@@ -99,7 +99,7 @@ export class Project {
 	}
 
 	static getPublicConfigFilename(publicDir) {
-		return path.join(publicDir, 'config.json');
+		return path.join(publicDir, 'jay.project.json');
 	}
 
 	static async readPublicConfigFile(publicDir) {

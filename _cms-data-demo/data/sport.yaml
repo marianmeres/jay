@@ -1,0 +1,73 @@
+_access:
+    public:
+        read_one: true
+        read_all: true
+
+_schema:
+    title: Sports
+    description: Just a dummy example collection
+    required:
+    properties:
+        name:
+            type: string
+            _html:
+                description:
+            _unique: true
+            _cms_collection_view_visible: true
+            _natural_id: true
+            _transform:
+            _order: 10
+
+        description:
+            type: string
+            _html:
+                type: markdown
+            _order: 30
+
+        accessory_id:
+            type:
+                - array
+                - 'null'
+            _html:
+                type: reference_any_of
+                reference_whitelist:
+                    - _sport_accessories
+                description:
+            _cms_collection_view_visible: true
+            _order: 35
+            _default: []
+
+        is_individual:
+            type: boolean
+            _html:
+                type: checkbox
+                description:
+            _transform:
+                - boolean
+            _cms_collection_view_visible: true
+            _order: 40
+
+        enabled:
+            type: boolean
+            _html:
+                type: checkbox
+                description:
+            _default: true
+            _transform:
+                - boolean
+            _order: 50
+
+        custom:
+            type:
+                - array
+                - number
+                - string
+                - object
+                - 'null'
+            _html:
+                type: any
+                description: >
+                    Optional, arbitrary data.
+            _order: 999
+
+    _order: 2
