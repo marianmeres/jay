@@ -1,6 +1,6 @@
 {
 	"name": "@marianmeres/jay",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "The naive, the json, the CMS",
 	"main": "./build/index.js",
 	"types": "./build/index.d.ts",
