@@ -121,20 +121,19 @@ suite.test('collection limit offset', async () => {
 	assert(r.data.meta.limit === 0);
 	assert(r.data.meta.offset === 0);
 
-	// sorted by _created_at by default
-	assert(r.data.rows[0].name === 'bar');
-	assert(r.data.rows[1].name === '1');
-	assert(r.data.rows[9].name === '9');
-
+	// sorted by _created_at desc by default
+	assert(r.data.rows[0].name === '9');
+	assert(r.data.rows[1].name === '8');
+	assert(r.data.rows[9].name === 'bar');
 	//
 	r = await get(withQueryVars(API_ENT_TEST, { limit: 3 }));
 	assert(r.data.rows.length === 3);
 	assert(r.data.meta.total === 10);
 	assert(r.data.meta.limit === 3);
 	assert(r.data.meta.offset === 0);
-	assert(r.data.rows[0].name === 'bar');
-	assert(r.data.rows[1].name === '1');
-	assert(r.data.rows[2].name === '2');
+	assert(r.data.rows[0].name === '9');
+	assert(r.data.rows[1].name === '8');
+	assert(r.data.rows[2].name === '7');
 
 	//
 	r = await get(withQueryVars(API_ENT_TEST, { limit: 2, offset: 5 }));
@@ -143,8 +142,8 @@ suite.test('collection limit offset', async () => {
 	assert(r.data.meta.total === 10);
 	assert(r.data.meta.limit === 2);
 	assert(r.data.meta.offset === 5);
-	assert(r.data.rows[0].name === '5');
-	assert(r.data.rows[1].name === '6');
+	assert(r.data.rows[0].name === '4');
+	assert(r.data.rows[1].name === '3');
 
 	//
 	r = await get(withQueryVars(API_ENT_TEST, { limit: 2, offset: 100 }));
@@ -160,7 +159,7 @@ suite.test('collection limit offset', async () => {
 	assert(r.data.meta.total === 10);
 	assert(r.data.meta.limit === 0);
 	assert(r.data.meta.offset === 9);
-	assert(r.data.rows[0].name === '9');
+	assert(r.data.rows[0].name === 'bar');
 
 	//
 	r = await get(withQueryVars(API_ENT_TEST, { offset: 100 }));

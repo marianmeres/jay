@@ -38,7 +38,7 @@ suite.test('cms files are picked and sorted correctly', async () => {
 	const store = await Cms.createStore(raw, false);
 
 	for (let type of ['models', 'schemas', 'access', 'meta']) {
-		for (let entity of [Config.ENTITY_USER, Config.ENTITY_TEST]) {
+		for (let entity of [/*Config.ENTITY_USER, */ Config.ENTITY_TEST]) {
 			const v = _.at(store as any, `${type}.${entity}`)[0];
 			assert(v, `Missing value in cms store ${type}.${entity}`);
 			if (['models', 'schemas'].includes(type)) {

@@ -1,0 +1,5 @@
+{
+	"email": "foo@example.com",
+	"__password": "put here the output of `npm run pswhash my-super-sercret-password`",
+	"role": "admin"
+}
