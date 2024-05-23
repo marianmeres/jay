@@ -41,7 +41,7 @@ _Jay_ comes bundled with it's brother _Joy_ -- a nice modern admin GUI, mounted 
 
 ## Use case
 
-You may not have access to a DB on the server but still need to reliably read/write some data... You may want to version your schemas and data in a git repo instead of worrying about DB backups and SQL migrations... You may want to generate some static but data-driven output locally (e.g. generate static website)...
+You may not have access to a DB on the server but still need to reliably read/write some data... You may want to version your schemas and data in a git repo instead of worrying about DB backups and SQL migrations... You may want to generate some static but data driven output locally (e.g. generate static website)...
 
 You simply may need a tiny and easy-to-configure yet still reliable REST API with GUI for whatever data driven needs.
 
