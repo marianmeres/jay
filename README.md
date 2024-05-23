@@ -11,7 +11,7 @@ Before we start, quick vocabulary context definition:
 - **document** - concrete "instance" of the model, also often thought of as a physical json file (in the DB context a row)
 - **data** - the actual document data (`JSON.parse`-d json file)
 - **collection** - list of document instances (in the DB context a set of rows)
-- **asset** - a special case model, having both `data` (in whatever structure described by schema) and a physical file saved on disk, (named by content hash)
+- **asset** - a special case model, having both `data` (in whatever structure described by schema) and a physical file saved on disk, named by it's content hash.
 
 All three words `model`, `entity` and `document` may and probably will be used inaccurately, but roughly describing the same thing.
 
@@ -90,14 +90,14 @@ This is a little bumpy for now... The detailed explanation on how to prepare the
 
 Main collection and model endpoints. Whether they require authorized requests depends on the schema configuration.
 
-- `/{PROJECT_ID}/api/_cms/{ENTITY}`
+- `/{PROJECT_ID}/api/_cms/{ENTITY}` (`limit` and `offset` query params are supported)
 - `/{PROJECT_ID}/api/_cms/{ENTITY}/{DOCUMENT_ID}`
 
 Auth endpoint:
 
 - `/{PROJECT_ID}/api/auth`
 
-Other (require HTTP bearer token):
+Other misc (require HTTP bearer token):
 
 - `/{PROJECT_ID}/api/schema.json`
 - `/{PROJECT_ID}/api/upload`
