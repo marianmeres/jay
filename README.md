@@ -2,22 +2,22 @@
 
 The Naive, the JSON, the CMS.
 
-## What is this about?
+## What is Jay?
 
 Before we start, quick vocabulary context definition:
 
-- **model** - data structure described by schema (in the DB context a table structure)
-- **entity** - name of the model, which maps directly to the name of the YAML schema file (in the DB context a table name). May be used interchangeably with the term "document type".
-- **document** - concrete "instance" of the model, also often thought of as a physical json file (in the DB context a row)
-- **data** - the actual document data (`JSON.parse`-d json file)
-- **collection** - list of document instances (in the DB context a set of rows)
-- **asset** - a special case model, having both `data` (in whatever structure described by schema) and a physical file saved on disk, named by it's content hash.
+- **model** - data structure described by schema (in the DB context a table structure),
+- **entity** - type of the model (in the DB context a table name). May be used interchangeably with the term "document type",
+- **document** - concrete "instance" of the model, persisted as a physical json file (in the DB context a row),
+- **data** - somewhat vague, but mostly means some or all documents,
+- **collection** - list of document instances (in the DB context a set of rows),
+- **asset** - a special case model, having both `data` (in whatever structure described by schema) and a physical raw representation as a file saved on disk, named by it's content hash.
 
-All three words `model`, `entity` and `document` may and probably will be used inaccurately, but roughly describing the same thing.
+All three words `model`, `entity` and `document` may and probably will be used inaccurately, but are roughly describing the same thing.
 
-### The CMS
+### The "no DB" CMS
 
-_Jay_ is a generic CMS server that provides a REST interface for managing and serving any documents and assets. It features a basic CRUD authentication system and allows document types and schemas to be defined using YAML definition files, ensuring proper validation.
+_Jay_ is a generic CMS server -- it provides a REST interface for managing and serving any documents and assets. It features a basic CRUD authentication system and allows the access rights and document schemas to be defined using YAML definition files (regular JSON schemas under the hood), ensuring proper validation. These same YAML files can also define some props for the frontend admin UI.
 
 A single _Jay_ server instance can support multiple isolated projects, each independently configurable with ease.
 
@@ -25,25 +25,25 @@ Notably, _Jay_ operates **without the need for a traditional database**.
 
 ### The JSON
 
-All documents are serialized to the filesystem as well-formatted JSON files. Every document json file can be safely edited by hand if needed (with one note, that server must be restarted afterwards).
+_Jay_ is a json files writer -- all documents are serialized to the filesystem as well-formatted json files. Every document json file can be safely edited by hand if needed. It should also be noted, that the raw json files are not statically served but are always processed (to be able to respect schema and more...).
 
 Additionally, asset source files are efficiently stored in a separate configured directory. Images are treated with special care out of the box.
 
 ### The Naive
 
-_Jay_ maintains all documents in memory, with serialization to disk occurring only during write operations. This design choice results in high performance but limits scalability.
+_Jay_ is an honest yet a bit naive servant -- it maintains all documents in memory, with serialization to disk occurring only during write operations. This design choice results in high performance but limits scalability.
 
-For managing a vast number of documents, handling numerous concurrent write operations, or distributing multiple instances across multiple nodes, alternative solutions should be considered.
+For managing a vast number of documents, or the need to spawn multiple server instances across multiple nodes, alternative solutions should be considered.
 
-## GUI
+## What is the use case?
 
-_Jay_ comes bundled with it's brother _Joy_ -- a nice modern admin GUI, mounted on the `/admin/` path by default. This GUI is an ongoing work-in-progress (currently in an alpha stage) and is not open source.
+When you may not have access to a DB on the server but still need to reliably read/write some data... When you may want to bundle (and to version) your schemas and data in a git repo instead of worrying about DB backups and SQL migrations...
 
-## Use case
+When you simply need a tiny and easy-to-configure, yet still reliable REST API with GUI for whatever data driven needs.
 
-You may not have access to a DB on the server but still need to reliably read/write some data... You may want to version your schemas and data in a git repo instead of worrying about DB backups and SQL migrations... You may want to generate some static but data driven output locally (e.g. generate static website)...
+## The admin GUI
 
-You simply may need a tiny and easy-to-configure yet still reliable REST API with GUI for whatever data driven needs.
+_Jay_ comes bundled with it's brother _Joy_ -- a modern admin GUI, mounted on the `/admin/` path by default. This GUI is an ongoing work-in-progress (currently in an alpha stage) and is not open source.
 
 ## Installation (quick start)
 
@@ -51,13 +51,13 @@ You simply may need a tiny and easy-to-configure yet still reliable REST API wit
 2. `cd jay`
 3. `npm install`
 4. `cp projects.config.example.json projects.config.json`
-5. `vim projects.config.json` (optional)
+5. `vim projects.config.json` (can be skipped if you want to play with the demo only)
 6. `cp .env.example .env`
-7. `vim .env` (optional)
+7. `vim .env` (optional if you're OK with the defaults)
 8. `npm run start`
 9. open `http://localhost:6100/admin/` in your browser, add the default server and click on the "Demo project". Use `admin@example.com` and `this-user-should-be-deleted` as credentials.
 
-## Creating a new project (docs will be improved)
+## Creating a new project (todo: improve docs)
 
 This is a little bumpy for now... The detailed explanation on how to prepare the schema files will be added later.
 
@@ -81,14 +81,15 @@ This is a little bumpy for now... The detailed explanation on how to prepare the
 ]
 ```
 
-3. Create any yaml definition files describing your models. Name of the yaml file will be the name of your entity. There are few entity names which are reserved (currently `_user` and `_asset`).
-   <br /><br />For now, look into the `_cms-data-demo` folder for inspiration. At very minimum, copy the `_user.yaml` and `_user/[whatever-the-id-is].json` to your new project's data dir. Edit the user json file by hand to fit your needs, mainly the `__password` key with some bcrypt value. You may use `npm run pswhash [your-password]` as a helper here.
+3. Create any yaml definition files describing your models. Name of the yaml file will be the name of your entity. There are few entity names which are recognized by the system as a special cases (currently `_user` and `_asset`).
+   <br /><br />
+   For now, look into the `_cms-data-demo` folder for inspiration. At very minimum, copy the `_user.yaml` and `_user/[whatever-the-id-is].json` to your new project's data dir. Edit the user json file by hand to fit your needs, mainly the `__password` key with some bcrypt value. You may use `npm run pswhash [your-password]` as a helper here.
 
 4. Now, restart the server and refresh your admin GUI browser window to reload project configuration and select "My Project" from the projects list and you should be good to go.
 
-## The REST endpoints (docs will be improved)
+## The REST endpoints (todo: improve docs)
 
-Main collection and model endpoints. Whether they require authorized requests depends on the schema configuration.
+Main collection and model endpoints. Whether they require HTTP authorized requests depends on the schema configuration.
 
 - `/{PROJECT_ID}/api/_cms/{ENTITY}` (`limit` and `offset` query params are supported)
 - `/{PROJECT_ID}/api/_cms/{ENTITY}/{DOCUMENT_ID}`
@@ -97,10 +98,35 @@ Auth endpoint:
 
 - `/{PROJECT_ID}/api/auth`
 
-Other misc (require HTTP bearer token):
+Other miscellaneous. You must use the HTTP baerer auth header (token can be acquired from the auth endpoint above):
 
 - `/{PROJECT_ID}/api/schema.json`
 - `/{PROJECT_ID}/api/upload`
 - `/{PROJECT_ID}/api/dump`
 - `/{PROJECT_ID}/api/readme`
 - `/{PROJECT_ID}/api/__refresh__`
+
+## Naming convention magic
+
+There are few document props naming conventions which expose some handy features.
+
+- `_startsWithUnderscore` prop name is considered as a **read-only** and the REST endpoint will NEVER allow it to be overwritten by user-land data. Some of such props are also built-in into every document (`_created_at`, `_updated_at`, `_owner`).
+- `__startsWithDoubleUnderscore` prop name is considered as a **hidden** and will NEVER leave the server and will NEVER be overwritten by user-land data. Those props are simply filtered out for both incoming requests and outgoing responses. Typical example is a `__password` field of the `_user` model (leaving aside, that the actual `__password` value is a bcrypt hash, so even exposing it should not cause any harm).
+
+Note that you can always edit the fields by hand in the actual json files (server restart is required for those changes to take effect).
+
+---
+
+### What does the word "Jay" means?
+
+I had to ask our LLM friend. This is the answer.
+
+The word "jay" has several meanings depending on the context:
+
+- Bird: A "jay" is a type of bird known for its vibrant plumage and loud calls. Jays belong to the family Corvidae, which also includes crows and magpies.
+
+- Slang Term: In North American slang, particularly in the past, a "jay" referred to an unsophisticated or naive person, often someone from a rural area who is unfamiliar with urban ways.
+
+- Letter J: In some contexts, "jay" simply refers to the letter "J" in the English alphabet.
+
+- Traffic Violation: The term "jaywalking" is derived from this word, referring to the act of crossing the street illegally or recklessly, often not at a designated crosswalk.
