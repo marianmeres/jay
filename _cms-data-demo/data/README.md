@@ -5,6 +5,7 @@ Welcome to our fun little demo project! Think of it as a sneak peek into the bas
 <div class='text-sm opacity-75 mt-8'>
 __
 
-This readme file is located in project's data dir `_cms-data-demo/data/README.md`.
+This text what you are reading right now is a `README.md` file located in the
+project's data dir `_cms-data-demo/data/`.
 
 <div>
