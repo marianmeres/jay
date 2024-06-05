@@ -10,7 +10,7 @@
 		"build": "npm run clean && tsc",
 		"dev": "npm run clean && mkdirp build && tsc -w & nodemon --delay 1 -q -w build build/",
 		"start": "npm run build && env-cmd node build/",
-		"test": "env-cmd -- node --loader ts-node/esm tests/index.ts",
+		"test": "env-cmd -- node --no-deprecation --loader ts-node/esm tests/index.ts",
 		"test:watch": "nodemon --delay 0.5 -q -w \"src/**/*.*\" -w \"tests/**/*.*\" -x \"node --loader ts-node/esm tests/index.ts\" --",
 		"prettier": "prettier --write \"src/**/*.{js,ts,json}\"",
 		"pswhash": "node password-hash.cjs",
